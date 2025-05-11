@@ -1,47 +1,49 @@
-Protein Sequence Classification and Generation
-This project implements a deep learning pipeline using PyTorch to classify protein sequences into functional categories and generate synthetic protein sequences. The final model is deployable using a Flask web application.
+# Protein Sequence Classification and Generation
 
-Dataset
-Source: Kaggle - Protein Dataset
+This project presents a deep learning pipeline developed in **PyTorch** for classifying protein sequences into functional categories and generating new synthetic sequences. The final trained classifier is deployed via a **Flask** web application, allowing real-time prediction through a user interface and REST API.
 
-Files:
+---
 
-pdb_data_no_dups.csv: Contains structural and biochemical attributes.
+## Dataset
 
-pdb_data_seq.csv: Contains the actual protein sequences.
+**Source**: [Kaggle - Protein Dataset](https://www.kaggle.com/datasets/shahir/protein-data-set)
 
-Project Structure
-Preprocessing & EDA: Handles missing values, filters protein types, selects top 20 classes, encodes sequences.
+**Files:**
+- `pdb_data_no_dups.csv` — Contains structural and biochemical attributes.
+- `pdb_data_seq.csv` — Contains the amino acid sequences of proteins.
 
-BiLSTM Classifier: A PyTorch-based model trained to classify sequences into 20 protein classes.
+---
 
-Protein Generator: A next-token prediction LSTM model trained to generate realistic sequences.
+## Project Structure
 
-Model Evaluation: Includes validation accuracy, classification report, and confusion matrix.
+- **Preprocessing & EDA**: Cleans data, fills missing values, filters proteins, selects the top 20 classes, and encodes sequences.
+- **BiLSTM Classifier**: A PyTorch-based BiLSTM model trained to classify sequences into 20 functional classes.
+- **Protein Generator**: An LSTM-based generator trained using next-token prediction to synthesize plausible amino acid sequences.
+- **Model Evaluation**: Includes validation accuracy, confusion matrix, and classification report.
+- **Flask App**: Offers a simple web interface and `/predict` endpoint for protein classification.
 
-Flask App: Provides a web interface and REST endpoint (/predict) to classify input sequences.
+---
 
-Model Performance
-Classifier:
+## Model Performance
 
-Architecture: BiLSTM with embedding + batchnorm + dropout + dense layers
+### Classifier:
+- **Architecture**: BiLSTM with embedding, batch normalization, dropout, and fully connected layers.
+- **Validation Accuracy**: ~90%
+- **Target Classes**: Top 20 most frequent protein functions
+- **Label Transformation**: Handled using `LabelEncoder`
 
-Accuracy on validation set: ~90%
+### Generator:
+- **Architecture**: LSTM trained for amino acid token prediction
+- **Training**: Character-level sequence prediction
+- **Output**: Realistic protein sequences reclassified using the BiLSTM model
 
-Classes: Top 20 frequent protein function classes
+---
 
-Label encoder used to transform class names
+## Requirements
 
-Generator:
+The following Python packages are required:
 
-Model: LSTM-based next-token generator
-
-Trained using character-level amino acid prediction
-
-Output: realistic amino acid sequences used for reclassification
-
-Requirements.txt
-
+```
 flask
 torch
 numpy
@@ -51,17 +53,19 @@ matplotlib
 seaborn
 keras
 kagglehub
+```
 
-Results Compared to Literature
-Compared to the 2024 Procedia CS paper:
+---
 
-CNN with Integer Encoding (Paper): 90% accuracy
+## Results Compared to Literature
 
-BiLSTM (Ours): ~90% validation accuracy
+Our BiLSTM-based approach achieves competitive accuracy with state-of-the-art models discussed in the literature, confirming its efficacy for protein classification tasks.
 
-SVM + Count Vectorizer (Paper): 92% accuracy (best in paper)
+---
 
-Our method is on par with state-of-the-art deep learning approaches.
+## Citation
 
-Citation
-Farzana Tasnim et al. Protein Sequence Classification Through Deep Learning and Encoding Strategies. Procedia Computer Science 238 (2024) 876–881.
+Farzana Tasnim et al.  
+**"Protein Sequence Classification Through Deep Learning and Encoding Strategies."**  
+*Procedia Computer Science*, Volume 238, 2024, Pages 876–881.  
+DOI: [10.1016/j.procs.2024.06.106](https://doi.org/10.1016/j.procs.2024.06.106)
